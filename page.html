@@ -18,8 +18,8 @@
                             var img = "";
                             for (i = 0; i < 20; i++) {
                                 var img_url = data.hits[i].largeImageURL;
-                                img += "<span class='img-dwnld'><img src='" + img_url + "'/><span class='imgd'><div><i class='fa fa-download'></i><label>Download</label></div></span></span>";
-                                // document.getElementById("img-dwnld").innerHTML = img;
+                                img += "<span class='img-dwnld'><img src='" + img_url + "'/><span class='imgd'><div class='dwnldbtn'><i class='fa fa-download'></i><label>Download</label></div></span></span>";
+                            
                             }
                             document.getElementById("fetched-images").innerHTML = img;
                             document.getElementById("fetched-videos").innerHTML = "";
@@ -49,9 +49,9 @@
             }
             $(document).ready(function(){
              $(".dwnldbtn").click(function(){
-                                var image = "https://cdn.pixabay.com/photo/2015/10/09/00/55/lotus-978659_960_720.jpg";
-//                                 var image = $(this).parent().prev().attr("src");
-                                // alert(image);
+                                //var image = "https://cdn.pixabay.com/photo/2015/10/09/00/55/lotus-978659_960_720.jpg";
+                                var image = $(this).parent().prev().attr("src");
+                               // alert(image);
                                 var filename = image.substr(image.lastIndexOf('/')+1);
                                 // alert(filename);
                                 downloadImage(image);
