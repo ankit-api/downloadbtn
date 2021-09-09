@@ -48,10 +48,12 @@
                 });
             }
             $(document).ready(function(){
-             $(".imgd div").click(function(){
-                                var image = "https://cdn.pixabay.com/photo/2015/10/09/00/55/lotus-978659_960_720.jpg";
+             $(".dwnldbtn").click(function(){
+                                // var image = "https://cdn.pixabay.com/photo/2015/10/09/00/55/lotus-978659_960_720.jpg";
+                                var image = $(this).parent().prev().attr("src");
+                                // alert(image);
                                 var filename = image.substr(image.lastIndexOf('/')+1);
-                                alert(filename);
+                                // alert(filename);
                                 downloadImage(image);
                                 async function downloadImage(imageSrc) {
                                 const image = await fetch(imageSrc);
@@ -64,7 +66,6 @@
                                 document.body.appendChild(link);
                                 link.click();
                                 document.body.removeChild(link);
-                                // alert("finish");
                                 }
                             });
             });
