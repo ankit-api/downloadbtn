@@ -49,8 +49,8 @@
             }
             $(document).ready(function(){
              $(".dwnldbtn").click(function(){
-                                // var image = "https://cdn.pixabay.com/photo/2015/10/09/00/55/lotus-978659_960_720.jpg";
-                                var image = $(this).parent().prev().attr("src");
+                                var image = "https://cdn.pixabay.com/photo/2015/10/09/00/55/lotus-978659_960_720.jpg";
+//                                 var image = $(this).parent().prev().attr("src");
                                 // alert(image);
                                 var filename = image.substr(image.lastIndexOf('/')+1);
                                 // alert(filename);
@@ -274,7 +274,7 @@
                 <input type="button" onclick="myfunc()" value="Search">
                 <div class="options">
                     <label>Choose type of data you want &nbsp; &nbsp; &nbsp;</label>
-                    <input type="radio" name="option" id="images" value="images"><label for="option"> images</label>
+                    <input type="radio" name="option" id="images" value="images" checked><label for="option"> images</label>
                     <input type="radio" name="option" id="videos" value="videos"><label for="option"> videos</label>
                 </div>
             </div>
