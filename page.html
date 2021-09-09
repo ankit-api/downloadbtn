@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixabay api</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>        
+
+        function myfunc() {
+            var word = document.getElementById("word").value;
+            if (document.getElementById("images").checked) {
+                fetch(`https://pixabay.com/api/?key=23243638-6a69ba67a9ba4c216e44e0d41&q=${word}&image_type=photo`).then(function (response) {
+                    response.json()
+                        .then((data) => {
+                            var img = "";
+                            for (i = 0; i < 20; i++) {
+                                var img_url = data.hits[i].largeImageURL;
+                                img += "<span class='img-dwnld'><img src='" + img_url + "'/><span class='imgd'><div><i class='fa fa-download'></i><label>Download</label></div></span></span>";
+                                // document.getElementById("img-dwnld").innerHTML = img;
+                            }
+                            document.getElementById("fetched-images").innerHTML = img;
+                            document.getElementById("fetched-videos").innerHTML = "";
+                            
+                        });
+                });
+                
+            }
+            else if (document.getElementById("videos").checked) {
+                fetch(`https://pixabay.com/api/videos/?key=23243638-6a69ba67a9ba4c216e44e0d41&q=${word}`).then(function (response) {
+                    response.json()
+                        .then((data) => {
+                            console.log(data);
+                            // var x = Math.floor(Math.random()*data.hits.length);
+                            // console.log(x);
+                            var vid = "";
+                            for (i = 0; i < 10; i++) {
+                                var vid_url = data.hits[i].videos.medium.url;
+                                console.log(vid_url);
+                                // vid += '<video height="240"> < source src = "' + vid_url + '" type = "video/mp4" > </video>';
+                                vid += "<embed src='" + vid_url + "' height='260px'/>";
+                            }
+                            document.getElementById("fetched-videos").innerHTML = vid;
+                            document.getElementById("fetched-images").innerHTML = "";
+                        });
+                });
+            }
+            $(document).ready(function(){
+             $(".imgd div").click(function(){
+                                var image = "https://cdn.pixabay.com/photo/2015/10/09/00/55/lotus-978659_960_720.jpg";
+                                var filename = image.substr(image.lastIndexOf('/')+1);
+                                alert(filename);
+                                downloadImage(image);
+                                async function downloadImage(imageSrc) {
+                                const image = await fetch(imageSrc);
+                                const imageBlog = await image.blob();
+                                const imageURL = URL.createObjectURL(imageBlog);
+
+                                const link = document.createElement('a');
+                                link.href = imageURL;
+                                link.download = filename;
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                // alert("finish");
+                                }
+                            });
+            });
+        }
+        
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Libre+Baskerville&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(to left, rgb(149, 96, 247), rgb(217, 55, 238));
+        }
+
+        .main {
+            margin: auto;
+            /* background-color: rgb(152, 73, 226); */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .upper-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: url(bg.jpg), rgba(0, 0, 0, 0.5);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+            /* background-color: rgba(0,0,0,0.5); */
+        }
+
+        .upper-section::after {
+            content: '';
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .header {
+            margin-top: 150px;
+        }
+
+        .header h1 {
+            font-family: 'Libre Baskerville', serif;
+            text-transform: capitalize;
+            color: white;
+            text-align: center;
+        }
+
+        .header h5 {
+            font-family: 'Libre Baskerville', serif;
+            margin-top: 40px;
+            text-transform: capitalize;
+            color: rgb(231, 228, 228);
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .search-bar {
+            text-align: center;
+            margin-top: 65px;
+            margin-bottom: 200px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 30vw;
+            height: 40px;
+            padding: 10px 20px;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+        }
+
+        .search-bar input[type="text"]:hover {
+            border: 1px solid red;
+        }
+
+        .search-bar input[type="button"] {
+            font-family: 'Libre Baskerville', serif;
+            width: 10vw;
+            height: 40px;
+            padding: 10px 20px;
+            border: 1px solid white;
+            outline: none;
+            border-radius: 20px;
+            background-color: transparent;
+            color: white;
+        }
+
+        .search-bar input[type="button"]:hover {
+            border: none;
+            background-image: linear-gradient(to left, rgb(149, 96, 247), rgb(217, 55, 238));
+        }
+
+        .results {
+            width: 98vw;
+            margin-top: 10px;
+            z-index: 5;
+            /* overflow: hidden; */
+            /* background-color: rgb(71, 145, 230); */
+        }
+
+        .results #fetched-images {
+            text-align: center;
+            
+        }
+
+        .results #fetched-images img {
+            height: 260px;
+            margin: 0px 10px 10px 10px;
+        }
+
+        .results #fetched-images .img-dwnld{
+            position: relative;
+            overflow: hidden;
+        }
+        .results #fetched-images span.imgd{
+            height: 0px;
+            width: calc(100% - 20px);
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            /* transform: translateY(160px); */
+            background-image: linear-gradient(to bottom, rgba(65, 64, 64, 0.5), rgba(0, 0, 0, 0.9));
+            /* z-index: -1; */
+            transition: height 0.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        span.imgd > div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40%;
+            height: 30%;
+            border-radius: 5px;
+            background-color:  rgb(217, 55, 238);
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+        span.imgd div > i{
+            font-size: 20px;
+            padding: 0 10px 0 0 ;
+            color:rgb(231, 228, 228);
+        }
+        span.imgd > div:hover{
+            
+            transform: scale(0.9);
+        }
+        .results #fetched-images .img-dwnld:hover span.imgd{
+            /* transform: translateY(-13px); */
+            height: 160px;
+        }
+
+        .results #fetched-videos {
+            text-align: center;
+        }
+        .results #fetched-videos embed {
+            padding: 0px 10px 10px 10px;
+        }
+
+        label {
+            color: white;
+        }
+
+        .options {
+            margin-top: 20px;
+        }
+
+        @media only screen and (max-width: 450px) {
+            .search-bar input[type="button"] {
+                width: 25vw;
+            }
+
+            .search-bar input[type="text"] {
+                width: 40vw;
+            }
+            .results #fetched-images img{
+                max-width: 365px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="upper-section">
+            <div class="header">
+                <h1 id="h1">Get Free High Quality Images</h1>
+                <h5>The best free stock photos captured by our talented photographers.</h5>
+            </div>
+            <div class="search-bar">
+                <input type="text" name="word" id="word" placeholder="Search for images">
+                <input type="button" onclick="myfunc()" value="Search">
+                <div class="options">
+                    <label>Choose type of data you want &nbsp; &nbsp; &nbsp;</label>
+                    <input type="radio" name="option" id="images" value="images"><label for="option"> images</label>
+                    <input type="radio" name="option" id="videos" value="videos"><label for="option"> videos</label>
+                </div>
+            </div>
+        </div>
+        <div class="results">
+            <div id="fetched-images"></div>
+            <div id="fetched-videos"></div>
+        </div>
+    </div>
+
+    <script>
+        // var h1 = document.getElementById("fetched-images");
+        // h1.addEventListener("click", function(){
+        //     alert("hello");
+        //     console.log("hel");
+        // })
+    </script>
+</body>
+
+</html>
