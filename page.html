@@ -18,7 +18,7 @@
                             var img = "";
                             for (i = 0; i < 20; i++) {
                                 var img_url = data.hits[i].largeImageURL;
-                                img += "<span class='img-dwnld'><img src='" + img_url + "'/><span class='imgd'><div class='dwnldbtn'><i class='fa fa-download'></i><label>Download</label></div></span></span>";
+                                img += "<span class='img-dwnld'><img src='" + img_url + "'/><span class='imgd'><div class='dwnldbtn' onclick='performImageDownload(this)'><i class='fa fa-download'></i><label>Download</label></div></span></span>";
                             
                             }
                             document.getElementById("fetched-images").innerHTML = img;
@@ -47,7 +47,7 @@
                         });
                 });
             }
-            $(document).ready(function(){
+            /*$(document).ready(function(){
              $(".dwnldbtn").click(function(){
                                 //var image = "https://cdn.pixabay.com/photo/2015/10/09/00/55/lotus-978659_960_720.jpg";
                                 var image = $(this).parent().prev().attr("src");
@@ -68,8 +68,33 @@
                                 document.body.removeChild(link);
                                 }
                             });
-            });
+            }); */
+            
+        
         }
+        
+        
+   function performImageDownload(currentURLObj){
+
+      var image = $(currentURLObj).parent().prev().attr("src");
+      var filename = image.substr(image.lastIndexOf('/')+1);
+
+         downloadImage(image);
+         async function downloadImage(imageSrc) { 
+         const image = await fetch(imageSrc);
+         const imageBlog = await image.blob();
+         const imageURL = URL.createObjectURL(imageBlog);
+
+         const link = document.createElement('a');
+         link.href = imageURL;
+         link.download = filename;
+         document.body.appendChild(link);
+         link.click();
+         document.body.removeChild(link);
+        }
+
+     }
+
         
     </script>
     <style>
